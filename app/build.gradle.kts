@@ -1,7 +1,10 @@
 plugins {
   alias(libs.plugins.android.application)
+  id("org.jetbrains.kotlin.android")
   alias(libs.plugins.compose.compiler)
   alias(libs.plugins.kotlin.serialization)
+  alias(libs.plugins.hilt)
+  alias(libs.plugins.ksp)
 }
 
 android {
@@ -81,4 +84,20 @@ dependencies {
   implementation(libs.androidx.navigation3.ui)
   implementation(libs.androidx.navigation3.runtime)
   implementation(libs.androidx.lifecycle.viewmodel.navigation3)
+
+  // Room
+  implementation(libs.room.runtime)
+  implementation(libs.room.ktx)
+  ksp(libs.room.compiler)
+
+  // Hilt
+  implementation(libs.hilt.android)
+  ksp(libs.hilt.compiler)
+  implementation(libs.hilt.navigation.compose)
+
+  // Vico chart
+  implementation(libs.vico.compose.m3)
+
+  // Material icons
+  implementation(libs.androidx.compose.material.icons.extended)
 }
