@@ -5,6 +5,8 @@ import kotlinx.serialization.Serializable
 
 @Serializable data object Main : NavKey
 
+@Serializable data object HomeKey : NavKey
+
 @Serializable
 data class CalculatorKey(
     val prefillFund: Double = 0.0,
@@ -15,3 +17,5 @@ data class CalculatorKey(
 ) : NavKey
 
 @Serializable data object HistoryKey : NavKey
+
+@Serializable data object LoanKey : NavKey
