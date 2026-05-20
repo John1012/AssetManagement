@@ -100,4 +100,6 @@ dependencies {
 
   // Material icons
   implementation(libs.androidx.compose.material.icons.extended)
+
+  implementation(project(":loan"))
 }

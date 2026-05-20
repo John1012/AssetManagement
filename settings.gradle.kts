@@ -19,3 +19,4 @@ plugins {
 
 rootProject.name = "Asset Management"
 include(":app")
+include(":loan")

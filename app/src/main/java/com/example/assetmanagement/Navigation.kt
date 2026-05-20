@@ -16,47 +16,75 @@ import androidx.navigation3.runtime.rememberNavBackStack
 import androidx.navigation3.ui.NavDisplay
 import com.example.assetmanagement.calculator.ui.calculator.CalculatorScreen
 import com.example.assetmanagement.calculator.ui.history.HistoryScreen
+import com.example.assetmanagement.loan.LoanNavigation
+import com.example.assetmanagement.ui.home.HomeScreen
 
 @Composable
 fun MainNavigation() {
-    val backStack = rememberNavBackStack(CalculatorKey())
-    val current = backStack.lastOrNull()
+    val backStack = rememberNavBackStack(HomeKey)
 
-    Scaffold(
-        bottomBar = {
-            NavigationBar {
-                NavigationBarItem(
-                    selected = current is CalculatorKey,
-                    onClick = { backStack.clear(); backStack.add(CalculatorKey()) },
-                    icon = { Icon(Icons.Default.Home, contentDescription = null) },
-                    label = { Text("Calculator") }
-                )
-                NavigationBarItem(
-                    selected = current == HistoryKey,
-                    onClick = { backStack.clear(); backStack.add(HistoryKey) },
-                    icon = { Icon(Icons.Default.DateRange, contentDescription = null) },
-                    label = { Text("History") }
+    NavDisplay(
+        backStack = backStack,
+        onBack = { backStack.removeLastOrNull() },
+        entryProvider = entryProvider {
+            entry<HomeKey> {
+                HomeScreen(
+                    onCompoundClick = { backStack.add(CalculatorKey()) },
+                    onLoanClick = { backStack.add(LoanKey) }
                 )
             }
-        }
-    ) { paddingValues ->
-        NavDisplay(
-            backStack = backStack,
-            onBack = { backStack.removeLastOrNull() },
-            entryProvider = entryProvider {
-                entry<CalculatorKey> { key ->
+            entry<CalculatorKey> { key ->
+                Scaffold(
+                    bottomBar = {
+                        NavigationBar {
+                            NavigationBarItem(
+                                selected = true,
+                                onClick = {},
+                                icon = { Icon(Icons.Default.Home, contentDescription = null) },
+                                label = { Text("Calculator") }
+                            )
+                            NavigationBarItem(
+                                selected = false,
+                                onClick = { backStack.clear(); backStack.add(HomeKey); backStack.add(HistoryKey) },
+                                icon = { Icon(Icons.Default.DateRange, contentDescription = null) },
+                                label = { Text("History") }
+                            )
+                        }
+                    }
+                ) { paddingValues ->
                     CalculatorScreen(
                         prefillFund = key.prefillFund,
                         prefillROI = key.prefillROI,
                         prefillYears = key.prefillYears,
                         prefillContribution = key.prefillContribution,
-                        hasPrefill = key.hasPrefill
+                        hasPrefill = key.hasPrefill,
+                        modifier = Modifier.padding(paddingValues)
                     )
                 }
-                entry<HistoryKey> {
+            }
+            entry<HistoryKey> {
+                Scaffold(
+                    bottomBar = {
+                        NavigationBar {
+                            NavigationBarItem(
+                                selected = false,
+                                onClick = { backStack.clear(); backStack.add(HomeKey); backStack.add(CalculatorKey()) },
+                                icon = { Icon(Icons.Default.Home, contentDescription = null) },
+                                label = { Text("Calculator") }
+                            )
+                            NavigationBarItem(
+                                selected = true,
+                                onClick = {},
+                                icon = { Icon(Icons.Default.DateRange, contentDescription = null) },
+                                label = { Text("History") }
+                            )
+                        }
+                    }
+                ) { paddingValues ->
                     HistoryScreen(
                         onItemClick = { item ->
                             backStack.clear()
+                            backStack.add(HomeKey)
                             backStack.add(
                                 CalculatorKey(
                                     prefillFund = item.initialFund,
@@ -66,11 +94,14 @@ fun MainNavigation() {
                                     hasPrefill = true
                                 )
                             )
-                        }
+                        },
+                        modifier = Modifier.padding(paddingValues)
                     )
                 }
-            },
-            modifier = Modifier.padding(paddingValues)
-        )
-    }
+            }
+            entry<LoanKey> {
+                LoanNavigation()
+            }
+        }
+    )
 }
