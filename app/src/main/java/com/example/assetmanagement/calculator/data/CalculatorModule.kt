@@ -25,7 +25,9 @@ abstract class CalculatorModule {
         @Provides
         @Singleton
         fun provideCalculationDatabase(@ApplicationContext context: Context): CalculationDatabase =
-            Room.databaseBuilder(context, CalculationDatabase::class.java, "calculations.db").build()
+            Room.databaseBuilder(context, CalculationDatabase::class.java, "calculations.db")
+                .fallbackToDestructiveMigration()
+                .build()
 
         @Provides
         fun provideCalculationDao(db: CalculationDatabase): CalculationDao = db.calculationDao()

@@ -9,7 +9,7 @@ data class CalculationEntity(
     val initialFund: Double,
     val annualROI: Double,
     val durationYears: Int,
-    val annualContribution: Double,
+    val monthlyContribution: Double,
     val finalValue: Double,
     val savedAt: Long
 )
