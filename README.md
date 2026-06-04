@@ -1,6 +1,6 @@
 # Asset Management
 
-An Android app featuring a **compound interest calculator** with year-by-year growth visualization and persistent calculation history.
+An Android app featuring a **compound interest calculator** with year-by-year growth visualization, monthly dollar-cost-averaging (DCA) comparison, and persistent calculation history.
 
 ## Screenshots
 
@@ -10,8 +10,8 @@ An Android app featuring a **compound interest calculator** with year-by-year gr
 
 ## Features
 
-- **Compound interest calculator** — enter initial fund, annual ROI (%), duration (1–100 years), and optional annual contribution
-- **Year-by-year growth chart** — Vico line chart showing total value vs. total contributed over time
+- **Compound interest calculator** — enter initial fund, annual ROI (%), duration (1–100 years), and an optional **monthly contribution** (DCA)
+- **Monthly DCA comparison chart** — Vico line chart with up to three lines and a color legend: **With DCA** (total value including monthly contributions), **Without DCA** (initial fund growing on its own), and **Contributed** (cumulative principal). When no monthly contribution is entered, only the value and contributed lines are shown
 - **Result summary** — final value, total contributed, and total interest earned, all formatted in NT$
 - **Calculation history** — every calculation is saved automatically to a local Room database
 - **Prefill from history** — tap any history item to reload its inputs into the calculator
@@ -20,10 +20,16 @@ An Android app featuring a **compound interest calculator** with year-by-year gr
 
 ## Compound Growth Formula
 
-Contribution is added at the **start** of each year before interest compounds:
+The monthly contribution is annualized (`annualContribution = monthlyContribution × 12`) and added at the **start** of each year before interest compounds:
 
 ```
-value(year) = (value(year - 1) + annualContribution) × (1 + annualROI / 100)
+value(year) = (value(year - 1) + monthlyContribution × 12) × (1 + annualROI / 100)
+```
+
+When a monthly contribution is supplied, a **baseline** series is also computed — the initial fund compounding on its own with no contributions — to power the "Without DCA" comparison line:
+
+```
+baseline(year) = baseline(year - 1) × (1 + annualROI / 100)
 ```
 
 ## Architecture
@@ -37,7 +43,7 @@ calculator/
 │   ├── CalculationRepositoryImpl.kt
 │   └── CalculatorModule.kt # Hilt DI bindings
 ├── domain/
-│   ├── model/              # CalculationInput, CalculationResult, YearlySnapshot, HistoryItem
+│   ├── model/              # CalculationInput (monthlyContribution), CalculationResult (+ baselineSnapshots), YearlySnapshot, HistoryItem
 │   ├── repository/         # CalculationRepository interface
 │   └── usecase/            # ComputeCompoundGrowthUseCase, SaveCalculationUseCase, GetCalculationHistoryUseCase
 └── ui/
@@ -53,7 +59,7 @@ calculator/
 | UI | Jetpack Compose + Material 3 | BOM 2026.03.01 |
 | Navigation | Navigation 3 (`androidx.navigation3`) | 1.0.1 |
 | DI | Hilt | 2.59.2 |
-| Database | Room | 2.7.1 |
+| Database | Room (schema v2, destructive migration) | 2.7.1 |
 | Chart | Vico (`compose-m3`) | 2.0.0 |
 | Annotation processing | KSP | 2.3.0 |
 | Build | Android Gradle Plugin | 9.0.1 |
@@ -89,7 +95,7 @@ Open the project in Android Studio and run on an emulator or physical device (AP
 
 | Test class | Tests |
 |---|---|
-| `ComputeCompoundGrowthUseCaseTest` | 5 — formula correctness, zero ROI, contributions |
+| `ComputeCompoundGrowthUseCaseTest` | 6 — formula correctness, zero ROI, monthly contributions, baseline snapshots |
 | `CalculatorViewModelTest` | 3 — initial state, calculate, prefill |
 | `HistoryViewModelTest` | 3 — loading, empty, success states |
 | `SaveCalculationUseCaseTest` | 1 — delegates to repository |
