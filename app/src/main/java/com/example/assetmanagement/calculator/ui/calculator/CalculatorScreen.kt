@@ -27,6 +27,8 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.example.assetmanagement.calculator.domain.model.CalculationInput
 import com.example.assetmanagement.calculator.domain.model.CalculationResult
+import androidx.compose.ui.res.stringResource
+import com.example.assetmanagement.R
 import java.text.NumberFormat
 import java.util.Locale
 
@@ -63,13 +65,13 @@ fun CalculatorScreen(
             .verticalScroll(rememberScrollState())
             .padding(16.dp)
     ) {
-        Text("Compound Calculator", style = MaterialTheme.typography.headlineSmall)
+        Text(stringResource(R.string.calculator_title), style = MaterialTheme.typography.headlineSmall)
         Spacer(Modifier.height(16.dp))
 
         OutlinedTextField(
             value = fundText,
             onValueChange = { fundText = it },
-            label = { Text("Initial Fund (NT\$)") },
+            label = { Text(stringResource(R.string.field_initial_fund)) },
             keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number),
             modifier = Modifier.fillMaxWidth()
         )
@@ -77,7 +79,7 @@ fun CalculatorScreen(
         OutlinedTextField(
             value = roiText,
             onValueChange = { roiText = it },
-            label = { Text("Annual ROI (%)") },
+            label = { Text(stringResource(R.string.field_annual_roi)) },
             keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Decimal),
             modifier = Modifier.fillMaxWidth()
         )
@@ -85,7 +87,7 @@ fun CalculatorScreen(
         OutlinedTextField(
             value = yearsText,
             onValueChange = { yearsText = it },
-            label = { Text("Duration (years, 1–100)") },
+            label = { Text(stringResource(R.string.field_duration)) },
             keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number),
             modifier = Modifier.fillMaxWidth()
         )
@@ -93,7 +95,7 @@ fun CalculatorScreen(
         OutlinedTextField(
             value = contributionText,
             onValueChange = { contributionText = it },
-            label = { Text("Monthly Contribution (NT\$, optional)") },
+            label = { Text(stringResource(R.string.field_monthly_contribution)) },
             keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number),
             modifier = Modifier.fillMaxWidth()
         )
@@ -111,7 +113,7 @@ fun CalculatorScreen(
                 )
             },
             modifier = Modifier.fillMaxWidth()
-        ) { Text("Calculate") }
+        ) { Text(stringResource(R.string.action_calculate)) }
 
         Spacer(Modifier.height(24.dp))
 
@@ -124,7 +126,7 @@ fun CalculatorScreen(
                 Spacer(Modifier.height(16.dp))
                 ResultSummaryCard(result = s.result)
             }
-            is CalculatorUiState.Error -> Text("Error: ${s.message}", color = MaterialTheme.colorScheme.error)
+            is CalculatorUiState.Error -> Text(stringResource(R.string.calculator_error, s.message), color = MaterialTheme.colorScheme.error)
             CalculatorUiState.Idle -> {}
         }
     }
@@ -134,11 +136,11 @@ fun CalculatorScreen(
 private fun ResultSummaryCard(result: CalculationResult) {
     Card(modifier = Modifier.fillMaxWidth()) {
         Column(modifier = Modifier.padding(16.dp)) {
-            Text("Results", style = MaterialTheme.typography.titleMedium)
+            Text(stringResource(R.string.results_title), style = MaterialTheme.typography.titleMedium)
             Spacer(Modifier.height(8.dp))
-            ResultRow("Final Value", result.finalValue)
-            ResultRow("Total Contributed", result.totalContributed)
-            ResultRow("Total Interest Earned", result.totalInterestEarned)
+            ResultRow(stringResource(R.string.result_final_value), result.finalValue)
+            ResultRow(stringResource(R.string.result_total_contributed), result.totalContributed)
+            ResultRow(stringResource(R.string.result_total_interest), result.totalInterestEarned)
         }
     }
 }
@@ -146,5 +148,5 @@ private fun ResultSummaryCard(result: CalculationResult) {
 @Composable
 private fun ResultRow(label: String, value: Double) {
     val formatted = NumberFormat.getNumberInstance(Locale.TAIWAN).format(value.toLong())
-    Text("$label: NT\$$formatted")
+    Text(stringResource(R.string.result_row, label, formatted))
 }
