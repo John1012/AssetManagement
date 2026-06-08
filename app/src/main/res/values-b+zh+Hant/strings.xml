@@ -23,7 +23,7 @@
 
     <!-- Chart legend -->
     <string name="legend_with_dca">含定期定額</string>
-    <string name="legend_without_dca">未定期定額</string>
+    <string name="legend_without_dca">不含定期定額</string>
     <string name="legend_contributed">累計投入</string>
 
     <!-- History screen -->
