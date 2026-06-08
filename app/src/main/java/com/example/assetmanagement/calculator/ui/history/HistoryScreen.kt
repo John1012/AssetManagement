@@ -25,6 +25,8 @@ import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.example.assetmanagement.calculator.domain.model.HistoryItem
+import androidx.compose.ui.res.stringResource
+import com.example.assetmanagement.R
 import java.text.NumberFormat
 import java.text.SimpleDateFormat
 import java.util.Date
@@ -39,11 +41,11 @@ fun HistoryScreen(
     val state by viewModel.uiState.collectAsStateWithLifecycle()
 
     Column(modifier = modifier.fillMaxSize().padding(16.dp)) {
-        Text("History", style = MaterialTheme.typography.headlineSmall)
+        Text(stringResource(R.string.history_title), style = MaterialTheme.typography.headlineSmall)
         Spacer(Modifier.height(16.dp))
         when (val s = state) {
-            HistoryUiState.Loading -> Text("Loading...")
-            HistoryUiState.Empty -> Text("No calculations saved yet.")
+            HistoryUiState.Loading -> Text(stringResource(R.string.history_loading))
+            HistoryUiState.Empty -> Text(stringResource(R.string.history_empty))
             is HistoryUiState.Success -> {
                 LazyColumn {
                     items(s.items, key = { it.id }) { item ->
@@ -74,7 +76,7 @@ private fun SwipeToDismissHistoryCard(item: HistoryItem, onDelete: () -> Unit, o
             Box(
                 modifier = Modifier.fillMaxSize().background(MaterialTheme.colorScheme.error).padding(end = 16.dp),
                 contentAlignment = Alignment.CenterEnd
-            ) { Text("Delete", color = MaterialTheme.colorScheme.onError) }
+            ) { Text(stringResource(R.string.history_delete), color = MaterialTheme.colorScheme.onError) }
         }
     ) { HistoryItemCard(item = item, onClick = onClick) }
 }
@@ -88,8 +90,18 @@ private fun HistoryItemCard(item: HistoryItem, onClick: () -> Unit) {
             Text(dateFmt.format(Date(item.savedAt)), style = MaterialTheme.typography.labelSmall,
                 color = MaterialTheme.colorScheme.onSurfaceVariant)
             Spacer(Modifier.height(4.dp))
-            Text("NT\$${numFmt.format(item.initialFund.toLong())}  ROI: ${item.annualROI}%  ${item.durationYears}yr")
-            Text("Final: NT\$${numFmt.format(item.finalValue.toLong())}", style = MaterialTheme.typography.titleSmall)
+            Text(
+                stringResource(
+                    R.string.history_summary,
+                    numFmt.format(item.initialFund.toLong()),
+                    item.annualROI,
+                    item.durationYears
+                )
+            )
+            Text(
+                stringResource(R.string.history_final, numFmt.format(item.finalValue.toLong())),
+                style = MaterialTheme.typography.titleSmall
+            )
         }
     }
 }
