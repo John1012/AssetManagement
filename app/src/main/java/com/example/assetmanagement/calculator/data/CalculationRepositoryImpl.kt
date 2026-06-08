@@ -19,7 +19,7 @@ class CalculationRepositoryImpl @Inject constructor(
                 initialFund = input.initialFund,
                 annualROI = input.annualROI,
                 durationYears = input.durationYears,
-                annualContribution = input.annualContribution,
+                monthlyContribution = input.monthlyContribution,
                 finalValue = finalValue,
                 savedAt = System.currentTimeMillis()
             )
@@ -36,7 +36,7 @@ class CalculationRepositoryImpl @Inject constructor(
         initialFund = initialFund,
         annualROI = annualROI,
         durationYears = durationYears,
-        annualContribution = annualContribution,
+        monthlyContribution = monthlyContribution,
         finalValue = finalValue,
         savedAt = savedAt
     )

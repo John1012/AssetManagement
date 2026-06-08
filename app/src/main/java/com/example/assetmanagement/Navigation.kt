@@ -62,7 +62,7 @@ fun MainNavigation() {
                                     prefillFund = item.initialFund,
                                     prefillROI = item.annualROI,
                                     prefillYears = item.durationYears,
-                                    prefillContribution = item.annualContribution,
+                                    prefillContribution = item.monthlyContribution,
                                     hasPrefill = true
                                 )
                             )

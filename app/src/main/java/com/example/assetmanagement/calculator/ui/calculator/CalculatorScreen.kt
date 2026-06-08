@@ -93,7 +93,7 @@ fun CalculatorScreen(
         OutlinedTextField(
             value = contributionText,
             onValueChange = { contributionText = it },
-            label = { Text("Annual Contribution (NT\$, optional)") },
+            label = { Text("Monthly Contribution (NT\$, optional)") },
             keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number),
             modifier = Modifier.fillMaxWidth()
         )
@@ -106,7 +106,7 @@ fun CalculatorScreen(
                         initialFund = fundText.toDoubleOrNull() ?: 0.0,
                         annualROI = roiText.toDoubleOrNull() ?: 0.0,
                         durationYears = yearsText.toIntOrNull()?.coerceIn(1, 100) ?: 1,
-                        annualContribution = contributionText.toDoubleOrNull() ?: 0.0
+                        monthlyContribution = contributionText.toDoubleOrNull() ?: 0.0
                     )
                 )
             },
@@ -117,7 +117,10 @@ fun CalculatorScreen(
 
         when (val s = state) {
             is CalculatorUiState.ShowingResult -> {
-                GrowthChartContent(snapshots = s.result.yearlySnapshots)
+                GrowthChartContent(
+                    snapshots = s.result.yearlySnapshots,
+                    baselineSnapshots = s.result.baselineSnapshots
+                )
                 Spacer(Modifier.height(16.dp))
                 ResultSummaryCard(result = s.result)
             }
