@@ -1,3 +1,36 @@
 <resources>
     <string name="app_name">Asset Management</string>
+
+    <!-- Bottom navigation -->
+    <string name="nav_calculator">Calculator</string>
+    <string name="nav_history">History</string>
+
+    <!-- Calculator screen -->
+    <string name="calculator_title">Compound Calculator</string>
+    <string name="field_initial_fund">Initial Fund (NT$)</string>
+    <string name="field_annual_roi">Annual ROI (%)</string>
+    <string name="field_duration">Duration (years, 1–100)</string>
+    <string name="field_monthly_contribution">Monthly Contribution (NT$, optional)</string>
+    <string name="action_calculate">Calculate</string>
+    <string name="calculator_error">Error: %1$s</string>
+
+    <!-- Result summary -->
+    <string name="results_title">Results</string>
+    <string name="result_final_value">Final Value</string>
+    <string name="result_total_contributed">Total Contributed</string>
+    <string name="result_total_interest">Total Interest Earned</string>
+    <string name="result_row">%1$s: NT$%2$s</string>
+
+    <!-- Chart legend -->
+    <string name="legend_with_dca">With DCA</string>
+    <string name="legend_without_dca">Without DCA</string>
+    <string name="legend_contributed">Contributed</string>
+
+    <!-- History screen -->
+    <string name="history_title">History</string>
+    <string name="history_loading">Loading…</string>
+    <string name="history_empty">No calculations saved yet.</string>
+    <string name="history_delete">Delete</string>
+    <string name="history_summary">NT$%1$s  ROI: %2$s%%  %3$dyr</string>
+    <string name="history_final">Final: NT$%1$s</string>
 </resources>
