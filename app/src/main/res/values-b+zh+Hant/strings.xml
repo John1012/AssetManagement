@@ -1,0 +1,36 @@
+<resources>
+    <string name="app_name">Asset Management</string>
+
+    <!-- Bottom navigation -->
+    <string name="nav_calculator">計算機</string>
+    <string name="nav_history">歷史紀錄</string>
+
+    <!-- Calculator screen -->
+    <string name="calculator_title">複利計算機</string>
+    <string name="field_initial_fund">初始本金（NT$）</string>
+    <string name="field_annual_roi">年報酬率（%）</string>
+    <string name="field_duration">投資年期（1–100 年）</string>
+    <string name="field_monthly_contribution">每月定期投入（NT$，選填）</string>
+    <string name="action_calculate">計算</string>
+    <string name="calculator_error">錯誤：%1$s</string>
+
+    <!-- Result summary -->
+    <string name="results_title">計算結果</string>
+    <string name="result_final_value">最終價值</string>
+    <string name="result_total_contributed">總投入金額</string>
+    <string name="result_total_interest">總獲利</string>
+    <string name="result_row">%1$s：NT$%2$s</string>
+
+    <!-- Chart legend -->
+    <string name="legend_with_dca">含定期定額</string>
+    <string name="legend_without_dca">不含定期定額</string>
+    <string name="legend_contributed">累計投入</string>
+
+    <!-- History screen -->
+    <string name="history_title">歷史紀錄</string>
+    <string name="history_loading">載入中…</string>
+    <string name="history_empty">尚未儲存任何計算。</string>
+    <string name="history_delete">刪除</string>
+    <string name="history_summary">NT$%1$s  報酬率：%2$s%%  %3$d 年</string>
+    <string name="history_final">最終：NT$%1$s</string>
+</resources>

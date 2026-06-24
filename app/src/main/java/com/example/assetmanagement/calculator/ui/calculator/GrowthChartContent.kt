@@ -19,6 +19,8 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.toArgb
+import androidx.compose.ui.res.stringResource
+import com.example.assetmanagement.R
 import androidx.compose.ui.unit.dp
 import com.example.assetmanagement.calculator.domain.model.YearlySnapshot
 import com.patrykandpatrick.vico.compose.cartesian.CartesianChartHost
@@ -92,9 +94,9 @@ fun GrowthChartContent(
                 modifier = Modifier.fillMaxWidth(),
                 horizontalArrangement = Arrangement.spacedBy(12.dp)
             ) {
-                LegendItem("With DCA", dcaColor)
-                LegendItem("Without DCA", noDcaColor)
-                LegendItem("Contributed", contributedColor)
+                LegendItem(stringResource(R.string.legend_with_dca), dcaColor)
+                LegendItem(stringResource(R.string.legend_without_dca), noDcaColor)
+                LegendItem(stringResource(R.string.legend_contributed), contributedColor)
             }
         }
     }
