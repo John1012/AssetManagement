@@ -2,6 +2,7 @@ package com.example.assetmanagement
 
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Add
 import androidx.compose.material.icons.filled.DateRange
 import androidx.compose.material.icons.filled.Home
 import androidx.compose.material3.Icon
@@ -14,6 +15,7 @@ import androidx.compose.ui.Modifier
 import androidx.navigation3.runtime.entryProvider
 import androidx.navigation3.runtime.rememberNavBackStack
 import androidx.navigation3.ui.NavDisplay
+import com.example.assetmanagement.arithmetic.ui.ArithmeticScreen
 import com.example.assetmanagement.calculator.ui.calculator.CalculatorScreen
 import com.example.assetmanagement.calculator.ui.history.HistoryScreen
 
@@ -37,6 +39,12 @@ fun MainNavigation() {
                     icon = { Icon(Icons.Default.DateRange, contentDescription = null) },
                     label = { Text("History") }
                 )
+                NavigationBarItem(
+                    selected = current == ArithmeticKey,
+                    onClick = { backStack.clear(); backStack.add(ArithmeticKey) },
+                    icon = { Icon(Icons.Default.Add, contentDescription = null) },
+                    label = { Text("Math") }
+                )
             }
         }
     ) { paddingValues ->
@@ -52,6 +60,9 @@ fun MainNavigation() {
                         prefillContribution = key.prefillContribution,
                         hasPrefill = key.hasPrefill
                     )
+                }
+                entry<ArithmeticKey> {
+                    ArithmeticScreen()
                 }
                 entry<HistoryKey> {
                     HistoryScreen(

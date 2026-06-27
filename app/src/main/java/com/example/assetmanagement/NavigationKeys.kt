@@ -15,3 +15,5 @@ data class CalculatorKey(
 ) : NavKey
 
 @Serializable data object HistoryKey : NavKey
+
+@Serializable data object ArithmeticKey : NavKey
